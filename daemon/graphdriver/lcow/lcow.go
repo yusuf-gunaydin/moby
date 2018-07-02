@@ -1003,8 +1003,8 @@ func (fgc *fileGetCloserFromSVM) Get(filename string) (io.ReadCloser, error) {
 	errOut := &bytes.Buffer{}
 	outOut := &bytes.Buffer{}
 	file := path.Join(fgc.mvd.ContainerPath, filename)
-	if err := fgc.svm.runProcess(fmt.Sprintf("cat %s", file), nil, outOut, errOut); err != nil {
-		logrus.Debugf("cat %s failed: %s", file, errOut.String())
+	if err := fgc.svm.runProcess(fmt.Sprintf("cat \"%s\"", file), nil, outOut, errOut); err != nil {
+		logrus.Debugf("cat \"%s\" failed: %s", file, errOut.String())
 		return nil, err
 	}
 	return nopCloser{bytes.NewReader(outOut.Bytes())}, nil
